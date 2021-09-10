@@ -1,5 +1,6 @@
 ---
 layout: default
+<<<<<<< HEAD
 title: PostgreSQL Page
 ---
 
@@ -9,41 +10,53 @@ Last Modified: 2021-08-18
 # PostgreSQL Administration
 
 
+=======
+title: Home
+---
+Author: Varun Deshpande
+Started: 2021-08-16
+Last Modified: 2021-09-09
+
+---
+>>>>>>> c70b7a8b8a8de7de35923e2d7efd005025033c9a
 
 <div id="top"/>
 
 # Table of contents
+
 1. [PostgreSQL Administration](#PostgreSQL-Administration)
 	* [Installation on Debian](#Installation-on-Debian)
 	* [Initialization of the PostgreSQL cluster](#Initialization-of-the-PostgreSQL-cluster)
 	* [Configuring PostgreSQL](#Configuring-PostgreSQL)
 	* [Securing PostgreSQL](#Securing-PostgreSQL)
+	* [Database Maintenance](#Database-Maintenance)
+	* [Optimizing Performance](#Optimizing-Performance)
+	* [Logging and Auditing](#Logging-and-Auditing)
+	* [Error Handling](#Error-Handling)
+	* [High Availability](#High-Availability)
 2. [PostgreSQL Internals](#PostgreSQL-Internals)
-	* [System Catalogs](#System-Catalogs)
-	* [System Functions](#System-Functions)
+   * [PostgreSQL Processes](#PostgreSQL-Processes)
+   * [System Catalogs](#System-Catalogs)
+   * [System Functions](#System-Functions)
 3. [The SQL Language](#The-SQL-Language)
 4. [PostgreSQL Programming](#PostgreSQL-Programming)
 
----
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
 [top](#top)
-<div id="PostgreSQL-Administration"/>
 
+---
+
+<div id="PostgreSQL-Administration"/>
 # PostgreSQL Administration
+
 This section will cover the topics that are useful for a DBA in carrying out the day to day administrative tasks like installation, backups, restore, indexing and vacuuming, performance tuning, user/role management and access control.
 
-[top](#top)
-<div id="Installation-on-Debian"/>
 
+<div id="Installation-on-Debian"/>
 ## Installation on Debian
 Follow the below steps to install pre-packaged version of PostgreSQL server on a vanilla Debian server.
+
 ### Steps
+
 - From the terminal or command window on your machine, SSH into the Debian server as a user with `sudo` privileges.
 	```bash
 	$ ssh user_name@server_ip_address
@@ -64,28 +77,37 @@ Follow the below steps to install pre-packaged version of PostgreSQL server on a
 	```bash
 	$ sudo systemctl status postgresql
 	● postgresql.service - PostgreSQL RDBMS
-     Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
-     Active: active (exited) since Tue 2021-08-31 17:16:53 EDT; 16min ago
+   Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Tue 2021-08-31 17:16:53 EDT; 16min ago
 	```
 
 ### User account for PostgreSQL service
 The PostgreSQL daemon runs under the Linux operating system user account `postgres` that is created automatically during installation. (Do not confuse the operating system user account `postgres` with the database superuser account `postgres` in the PostgreSQL server). The installer scripts also grant this user complete access to the data directory where the PostgreSQL database files reside (see the defaults below). The `postgres` user should never own the PostgreSQL executable files, to ensure that a compromised server process could not modify those executables. You are not required to do anything if you installed the pre-packaged version of PostgreSQL on Debian.
 
 ### Default directories in Debian
-|||
+
+|Type|Location|
 |-|-|
-| **Data** `$PGDATA`		| `/var/lib/postgresql/13/main/` |
-| **Binaries**					|`/usr/lib/postgresql/13/bin/` |
-| **Shared Resources** 	| `/usr/share/postgresql/13/` |
-| **Config**						| `/etc/postgresql/13/main/` |
-| **Logs**							| `/var/log/postgresql/` | 
+| **Data** `$PGDATA`   | `/var/lib/postgresql/13/main/` |
+| **Binaries**         | `/usr/lib/postgresql/13/bin/`  |
+| **Shared Resources** | `/usr/share/postgresql/13/`    |
+| **Config**           | `/etc/postgresql/13/main/`     |
+| **Logs**             | `/var/log/postgresql/`         |
 
 [top](#top)
-<div id="Initialization-of-the-PostgreSQL-cluster"/>
 
+---
+
+<div id="Initialization-of-the-PostgreSQL-cluster"/>
 ## Initialization of the PostgreSQL cluster
+
+### Automatic Initialization
+
+The pre-packaged PostgreSQL server is automatically initialized by the installer during the installation process. It uses the default values to initialize the cluster. **You are not required to manually initialize the PostgreSQL cluster on Debian**, however, you can use the below command to manually initialize PostgreSQL server in cases where you have deleted the cluster and need to initialize it again.
+
 ### Manual Initialization
-The pre-packaged PostgreSQL server is automatically initialized by the installer during the installation process. It uses the default values to initialize the cluster. **You are not required to manually initialize the PostgreSQL cluster on Debian**, however, you can use the below command to manually initialize PostgreSQL server.
+
+The [`initdb`](https://www.postgresql.org/docs/13/app-initdb.html) utility is commonly used to initialize the PostgreSQL cluster. It can take several arguments like the the pgdata directory, collation, encoding, authentication methods etc.
 ```bash
 $ initdb -D /var/lib/postgresql/13/main --auth-local peer --auth-host md5
 ```
@@ -96,9 +118,11 @@ $ pg_ctl -D /usr/local/pgsql/data initdb
 ```
 
 ### Start, Stop and Restart PostgreSQL Service
+
 Use the below commands on Debian
 
 **Start PostgreSQL service**
+
 ```bash
 $ sudo systemctl start postgresql
 ```
@@ -114,7 +138,8 @@ $ sudo systemctl restart postgresql
 ```
 
 ### Changing configuration
-PostgreSQL stores all the config values in the configuration file located at: `/etc/postgresql/13/main/postgresql.conf`. This file consists of lines of the form: `name = value` (the "=" is optional). Whitespace may be used instead of the `=` symbol. Comments are introduced with a `#` symbol anywhere on a line. If a parameter is commented-out, it takes the default value. This file is read on server startup and when the server receives a SIGHUP signal.  If you edit the file on a running system, you have to SIGHUP the server for the changes to take effect, run `pg_ctl reload` on the server terminal, or `SELECT pg_reload_conf()` using the psql client. Some settings require the PostgreSQL service to be restarted to take effect.
+
+PostgreSQL stores all the config values in the configuration file located at: `/etc/postgresql/13/main/postgresql.conf`. This file consists of lines of the form: `name = value` (the "=" is optional). Whitespace may be used instead of the `=` symbol. Comments are introduced with a `#` symbol anywhere on a line. If a parameter is commented-out, it takes the default value. This file is read on server startup and when the server receives a SIGHUP signal. If you edit the file on a running system, you have to SIGHUP the server for the changes to take effect, run `pg_ctl reload` on the server terminal, or `SELECT pg_reload_conf()` using the psql client. Some settings require the PostgreSQL service to be restarted to take effect.
 
 In the newer versions of PostgreSQL it is discouraged to edit the default config file `postgresql.conf`, and instead settings should be changed using the `ALTER SYSTEM` commands. PostgreSQL saves the modified settings in a separate file `postgresql.auto.conf` which supersedes the default config file. You should not edit the file as it will be overwritten by the `ALTER SYSTEM` commands. The `ALTER SYSTEM` command takes the below form:
 ```sql
@@ -130,25 +155,27 @@ ALTER SYSTEM RESET ALL
 ```
 Depending on the type of setting, you will need to reload the config file or restart the service. Refer PostgreSQL documentation for details.
 
-### Recommended configuration
+### Common configuration parameters
+
 Consider changing the default settings to the widely popular best practices. You will need to restart the PostgreSQL service after changing the configuration values.
 
-| Parameter | Value | Description |
-|-|-|-|
-| listen_addresses | 'x.x.x.x' | Specify the IP addr that the PostgreSQL service should listen on. Specifying `*` here will make PostgreSQL listen on all the IPs of the system. | 
-| port | 5432 | Specify a uncommon port for security purposes. 5432 is the default. |
-| password_encryption | scram-sha-256 | Most secure standard of encryption. |
-| ssl | on | Allow SSL-encrypted connections to the server. |
-| shared_buffers | 75% of system memory | Allow usage of memory for better performance. |
-| maintenance_work_mem | 1-2 GB | Faster maintenance activities. |
-| log_min_duration_statement | 250ms | Capture statements that run >250ms in the log. |
-| log_duration | on | Log the duration of statement execution. |
-| log_hostname | on | Log the hostname of the client. |
-| timezone | 'Canada/Eastern' | Set the appropriate timezone. |
-| autovacuum | on | Enable the autovacuum process. |
-
+| Parameter                                    | Value                                           | Description                                                  |
+| -------------------------------------------- | :---------------------------------------------- | ------------------------------------------------------------ |
+| `listen_addresses` (`string`)                | '0.0.0.0' for all Ipv4 else specify explicitly. | The TCP/IP address(es) on which the server is to listen for connections from client applications. Specifying `*` here will make PostgreSQL listen on all the IPs (v4 and v6). Can accept comma separated list of IPs. `0.0.0.0` to listen on all IPv4 only, `::` to listen on all IPv6 only. |
+| `port` (`integer`)                           | 5432                                            | The TCP port the server listens on; 5432 by default. Prod environments can have an uncommon port for security purposes. |
+| `max_connections` (`integer`)                | 200                                             | Determines the maximum number of concurrent connections to the database server. Default 100. Adjust as needed. |
+| `superuser_reserved_connections` (`integer`) | 5                                               | The number of connection “slots” that are reserved for connections by PostgreSQL superusers. Default 3. |
+| `password_encryption`                        | scram-sha-256                                   | The algorithm to use to encrypt the password. Default `md5`. |
+| `shared_buffers`                             | **25%** of system memory                        | Amount of memory the database server uses for shared memory buffers. Incorrect values can have detrimental impact on the performance of the Database cluster. Default `128MB`. |
+| `effective_cache_size`                       | **75%** of system memory                        | Planner's assumption about the effective size of the disk cache that is available to a single query. |
+| `maintenance_work_mem`                       | upto 2 GB                                       | Maximum amount of memory to be used by maintenance operations. Faster maintenance activities. |
+| `work_mem`                                   | 1MB to 128MB                                    | Maximum amount of memory to be used by a query operation before writing to temporary disk files. This value depends on the `max_connections` parameter and the total server ram. |
+| `log_min_duration_statement`                 | 250ms                                           | Log the duration of each completed statement, if the statement ran for at least the specified amount of time. |
+| `log_duration`                               | on                                              | Log the duration of every completed statement.               |
+| `timezone`                                   | 'Canada/Eastern'                                | Set the appropriate timezone.                                |
 
 ### Connecting to PostgreSQL server
+
 The default superuser in the PostgreSQL cluster is the `postgres` database user. This is the only user account that gets created in the PostgreSQL cluster during the installation process. The pre-packaged installer does not set the password for the `postgres` database user, hence you cannot use a client tool like `psql` and connect using a password authentication. However you can login as the superuser by impersonating the account. 
 ```bash
 $ sudo -u postgres psql
@@ -184,6 +211,7 @@ $ createuser --pwprompt --login --superuser newrole
 > **Pro Tip:** If no password has been set up for a user, the stored password is null and password authentication will always fail for that user.
 
 ### Initialize phpPgAdmin
+
 As already discussed above, you can optionally install the phpPgAdmin tool on the server system to access and administer the PostgreSQL cluster. 
 ```bash
 $ sudo apt install phppgadmin
@@ -199,22 +227,25 @@ $ sudo systemctl restart apache
 ```
 Now, you will be able to connect to the PostgreSQL server and browse the objects using the URL: `http://<server_ip_address>/phppgadmin/` in the web browser of your choice.
 
-
 [top](#top)
-<div id="Configuring-PostgreSQL"/>
 
+---
+
+<div id="Configuring-PostgreSQL"/>
 ## Configuring PostgreSQL
+
 ### Editing postgresql.conf
+
 The most fundamental way to set the parameters of PostgreSQL server is to edit the file postgresql.conf, which is normally kept in the data directory or the path is explicitly specified as a parameter at startup. In Debian, the configuration file is stored outside the data directory at the location: `/etc/postgresql/13/main/postgresql.conf`. A default copy is installed when the database cluster directory is initialized. If the file contains multiple entries for the same parameter, all but the last one are ignored.
 
-All parameter names are case-insensitive. Every parameter takes a value of one of five types: boolean, string, integer, floating point, or enumerated (enum).  The type determines the syntax for setting the parameter:
-|Value Type|Syntax|
-|-|-|
-|Boolean|`on`, `off`, `true`, `false`, `yes`, `no`, `1`, `0` (all case-insensitive)|	
-|String|Value in single quotes, doubling any single quotes within the value. |
-|Numeric|Integer and floating-point formats; fractional values are rounded to the nearest integer.|
-|Numeric with unit|Some numeric parameters have an implicit unit, because they describe quantities of memory or time. Value written as string in single quotes. If a fractional value is specified with a unit, it will be rounded to a multiple of the next smaller unit if there is one. Valid memory units are `B` (bytes), `kB` (kilobytes), `MB` (megabytes), `GB` (gigabytes), and `TB` (terabytes). The multiplier for memory units is 1024, not 1000. Valid time units are `us` (microseconds), `ms` (milliseconds), `s` (seconds), `min` (minutes), `h` (hours), and `d` (days).|
-|Enum|Enumerated-type parameters are written in the same way as string parameters, but are restricted to have one of a limited set of values. Case insensitive.|
+All parameter names are case-insensitive. Every parameter takes a value of one of five types: boolean, string, integer, floating point, or enumerated (enum). The type determines the syntax for setting the parameter:
+| Value Type        | Syntax                                                       |
+| ----------------- | ------------------------------------------------------------ |
+| Boolean           | `on`, `off`, `true`, `false`, `yes`, `no`, `1`, `0` (all case-insensitive) |
+| String            | Value in single quotes, doubling any single quotes within the value. |
+| Numeric           | Integer and floating-point formats; fractional values are rounded to the nearest integer. |
+| Numeric with unit | Some numeric parameters have an implicit unit, because they describe quantities of memory or time. Value written as string in single quotes. If a fractional value is specified with a unit, it will be rounded to a multiple of the next smaller unit if there is one. Valid memory units are `B` (bytes), `kB` (kilobytes), `MB` (megabytes), `GB` (gigabytes), and `TB` (terabytes). The multiplier for memory units is 1024, not 1000. Valid time units are `us` (microseconds), `ms` (milliseconds), `s` (seconds), `min` (minutes), `h` (hours), and `d` (days). |
+| Enum              | Enumerated-type parameters are written in the same way as string parameters, but are restricted to have one of a limited set of values. Case insensitive. |
 
 >**Note:** The defalt unit of any setting can be found in the system catalog pg_settings.unit. 
 >The list of acceptable enum values can be found in the system catalog pg_settings.enumvals. 
@@ -224,86 +255,259 @@ The configuration file is reread whenever the main server process receives a `SI
 The system view [`pg_file_settings`](https://www.postgresql.org/docs/13/view-pg-file-settings.html "pg_file_settings") can be helpful for pre-testing changes to the configuration files, or for diagnosing problems if a SIGHUP signal did not have the desired effects.
 
 ### Include Config Files and Directories
+
 The `postgresql.conf` file can also contain `include` or `include_dir` directives, which respectively specify a file or an entire directory of configuration files to include. These look like `include auditing.conf` or `include_dir 'conf.d'`. If the file name is not an absolute path, it is taken as relative to the directory containing the referencing configuration file. Inclusions can be nested. Non-absolute directory names are taken as relative to the directory containing the referencing configuration file. Within the specified directory, only non-directory files whose names end with the suffix `.conf` will be included.
 
 ### ALTER SYSTEM
+
 In addition to `postgresql.conf`, a PostgreSQL data directory contains a file `postgresql.auto.conf`, which has the same format as `postgresql.conf` but is intended to be edited automatically, not manually. This file holds settings provided through the [`ALTER SYSTEM`](https://www.postgresql.org/docs/13/sql-altersystem.html "ALTER SYSTEM") command which is functionally equivalent to editing the `postgresql.conf`.
 
 ### ALTER DATABASE
 The [`ALTER DATABASE`](https://www.postgresql.org/docs/13/sql-alterdatabase.html "ALTER DATABASE") command allows global settings to be overridden on a per-database basis.
 
 ### ALTER ROLE
+
 The [`ALTER ROLE`](https://www.postgresql.org/docs/13/sql-alterrole.html "ALTER ROLE") command allows both global and per-database settings to be overridden with user-specific values.
 >Values set with `ALTER DATABASE` and `ALTER ROLE` are applied only when starting a fresh database session. They override values obtained from the configuration files or server command line, and constitute defaults for the rest of the session.
 
 ### Session-Local settings
+
 Once a client is connected to the database, PostgreSQL provides two additional SQL commands (and equivalent functions) to interact with session-local configuration settings:
 
-|Command|Description|
-|-|-|
-|`SHOW <name>;`|Gets the current session-local setting by name|
-|`SHOW ALL;`|Gets ALL the current session-local settings|
-|`SELECT current_setting(name);`|Gets the current session-local setting by name|
-|`SET configuration_parameter = value;`|Sets the current session-local setting by name|
-|`SELECT set_config(setting_name, new_value, is_local_bool);`|Sets the current session-local setting by name|
+| Command                                                      | Description                                    |
+| ------------------------------------------------------------ | ---------------------------------------------- |
+| `SHOW <name>;`                                               | Gets the current session-local setting by name |
+| `SHOW ALL;`                                                  | Gets ALL the current session-local settings    |
+| `SELECT current_setting(name);`                              | Gets the current session-local setting by name |
+| `SET configuration_parameter = value;`                       | Sets the current session-local setting by name |
+| `SELECT set_config(setting_name, new_value, is_local_bool);` | Sets the current session-local setting by name |
 
 ### Updating pg_settings
+
 The system view [`pg_settings`](https://www.postgresql.org/docs/13/view-pg-settings.html "pg_settings") can be used to view and change session-local values. Querying this view is similar to using SHOW ALL but provides more detail. It is also more flexible, since it's possible to specify filter conditions or join against other relations. Using UPDATE on this view, specifically updating the setting column, is the equivalent of issuing SET commands.
 
 ### Other Config files
+
 Apart from the primary config file `postgresql.conf`, the PostgreSQL server also uses the below two config files to control authentication. The location of these files is provided in the `postgresql.conf` file.
-|File|Description|
-|-|-|
-|`pg_hba.conf`|Specifies the configuration file for host-based authentication|
-|`pg_ident.conf`|Specifies the configuration file for user name mapping|
+| File            | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `pg_hba.conf`   | Specifies the configuration file for host-based authentication |
+| `pg_ident.conf` | Specifies the configuration file for user name mapping       |
 
 ### Changing location of Config files
 By default, all three configuration files are stored in the database cluster's data directory. The parameters described in this section allow the configuration files to be placed elsewhere.
-|Parameter|Description|
-|-|-|
-|`data_directory`|Specifies the directory to use for data storage. This parameter can only be set at server start.|
-|`config_file`|Specifies the main server configuration file (customarily called `postgresql.conf`). This parameter can only be set on the `postgres` command line.|
-|`hba_file`|Specifies the configuration file for host-based authentication (customarily called `pg_hba.conf`). This parameter can only be set at server start.|
-|`ident_file`|Specifies the configuration file for user name mapping (customarily called `pg_ident.conf`). This parameter can only be set at server start.|
-|`external_pid_file`|Specifies the name of an additional process-ID (PID) file that the server should create for use by server administration programs. This parameter can only be set at server start.|
+| Parameter                                                    | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `data_directory`                                             | Specifies the directory to use for data storage. This parameter can only be set at server start. |
+| `config_file`                                                | Specifies the main server configuration file (customarily called `postgresql.conf`). This parameter can only be set on the `postgres` command line. |
+| `hba_file`                                                   | Specifies the configuration file for host-based authentication (customarily called `pg_hba.conf`). This parameter can only be set at server start. |
+| `ident_file`                                                 | Specifies the configuration file for user name mapping (customarily called `pg_ident.conf`). This parameter can only be set at server start. |
+| `external_pid_file`                                          | Specifies the name of an additional process-ID (PID) file that the server should create for use by server administration programs. This parameter can only be set at server start. |
+
 In a default installation, none of the above parameters are set explicitly.If you wish to keep the configuration files elsewhere than the data directory, the `postgres` `-D` command-line option or `PGDATA` environment variable must point to the directory containing the configuration files, and the `data_directory` parameter must be set in `postgresql.conf` (or on the command line) to show where the data directory is actually located. Notice that `data_directory` overrides `-D` and `PGDATA` for the location of the data directory, but not for the location of the configuration files.
 
 If you wish, you can specify the configuration file names and locations individually using the parameters `config_file`, `hba_file` and/or `ident_file`. `config_file` can only be specified on the `postgres` command line, but the others can be set within the main configuration file. If all three parameters plus `data_directory` are explicitly set, then it is not necessary to specify `-D` or `PGDATA`.
 
 
 [top](#top)
-<div id="Securing-PostgreSQL"/>
-
-## Securing PostgreSQL Internals
-
-
-#
-
-### Securing data using Authentication
-- Password Encryption - If SCRAM or MD5 encryption is used for client authentication, the unencrypted password is never even temporarily present on the server because the client encrypts it before being sent across the network.
-- SSL Host Authentication - The client and server to provide SSL certificates to each other. Provides stronger verification of identity than the mere use of passwords. It also helps prevent “man in the middle” attacks.
-
-### Securing Data at rest
-- Encryption For Specific Columns - Using the pgcrypto module. The client supplies the decryption key and the data is decrypted on the server and then sent to the client.
-- Data Partition Encryption - Storage encryption performed at the file system level or the block level. Linux file system encryption options include eCryptfs and EncFS, while FreeBSD uses PEFS.
-- Client-Side Encryption - Data is encrypted on the client before being sent to the server, and database results have to be decrypted on the client before being used. Unencrypted data never appears on the database server and hence on the network.
-
-### Securing Data in motion
-- Encrypting Data Across A Network -  SSL-encrypted or GSSAPI-encrypted connections encrypt all data sent across the network. Stunnel or SSH can also be used to encrypt transmissions.
-- Client-Side Encryption - Data is encrypted on the client before being sent to the server, and database results have to be decrypted on the client before being used. Unencrypted data never appears on the database server and hence on the network.
-
 
 ---
-[top](#top)
-<div id="PostgreSQL-Internals"/>
 
+<div id="Securing-PostgreSQL"/>
+## Securing PostgreSQL
+
+### General concepts
+
+1. Securing data using Authentication
+   * Password Encryption - If SCRAM or MD5 encryption is used for client authentication, the unencrypted password is never even temporarily present on the server because the client encrypts it before being sent across the network.
+   * SSL Host Authentication - The client and server to provide SSL certificates to each other. Provides stronger verification of identity than the mere use of passwords. It also helps prevent “man in the middle” attacks.
+2. Securing data at rest
+   * Encryption For Specific Columns - Using the pgcrypto module. The client supplies the decryption key and the data is decrypted on the server and then sent to the client.
+   * Data Partition Encryption - Storage encryption performed at the file system level or the block level. Linux file system encryption options include eCryptfs and EncFS, while FreeBSD uses PEFS.
+   * Client-Side Encryption - Data is encrypted on the client before being sent to the server, and database results have to be decrypted on the client before being used. Unencrypted data never appears on the database server and hence on the network.
+3. Securing data in motion
+   * Encrypting Data Across A Network - SSL-encrypted or GSSAPI-encrypted connections encrypt all data sent across the network. Stunnel or SSH can also be used to encrypt transmissions.
+   * Client-Side Encryption - Data is encrypted on the client before being sent to the server, and database results have to be decrypted on the client before being used. Unencrypted data never appears on the database server and hence on the network.
+
+
+
+### Authentication
+
+Parameters that control PostgreSQL Authentication:
+
+| Setting                              | Description                                                  |
+| ------------------------------------ | ------------------------------------------------------------ |
+| `authentication_timeout` (`integer`) | The maximum number of concurrent connections from standby servers. The default is `10`. |
+| `password_encryption` (`enum`)       | The algorithm to use to encrypt the password. The default value is `md5`. Recommended to change this setting to `scram-sha-256` during the initial server setup as its the most secure encryption. |
+| `db_user_namespace` (`boolean`)      | Enable per-database user names. It is off by default. If this is on, you should create users as *`username@dbname`*. |
+
+### Authorization
+
+
+
+### SSL
+
+Some important parameters that control SSL are:
+
+| Setting                             | Description                                                  |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `ssl` (`boolean`)                   | Enables SSL connections.                                     |
+| `ssl_ca_file` (`string`)            | The name of the file containing the SSL server certificate authority (CA). |
+| `ssl_cert_file` (`string`)          | The name of the file containing the SSL server certificate.  |
+| `ssl_key_file` (`string`)           | The name of the file containing the SSL server private key.  |
+| `ssl_min_protocol_version` (`enum`) | The minimum SSL/TLS protocol version to use. Valid values are currently: `TLSv1`, `TLSv1.1`, `TLSv1.2`, `TLSv1.3`. |
+
+
+
+### Database Encryption
+
+[top](#top)
+
+---
+
+<div id="Database-Maintenance"/>
+## Database-Maintenance
+
+### Backup
+
+### WAL Archiving ### (Refer sections 19.5.x)
+
+### Restore
+
+### Archive Recovery
+
+### Vacuum
+
+### Index Maintenance
+
+### Log file maintenance
+
+[top](#top)
+
+---
+
+<div id="Optimizing-Performance"/>
+## Optimizing Performance 
+
+### Resource Consumption Refer section 19.4.x
+
+### Query Planning
+
+Some important parameters that influence the query plans chosen by the query optimizer are:
+
+| Setting | Description |
+| ------- | ----------- |
+|         |             |
+|         |             |
+|         |             |
+
+### Lock Management
+
+### Automatic Vacuuming
+### Stats Collector
+
+### Misc
+
+- fsync / wal_sync_method
+- full_page_writes
+- synchronous_commit 
+- checkpoint 
+- wal_writer_delay 
+- commit_delay 
+
+[top](#top)
+
+---
+
+<div id="Logging-and-Auditing"/>
+## Logging and Auditing
+
+[top](#top)
+
+---
+
+<div id="Error-Handling"/>
+## Error Handling
+
+[top](#top)
+
+---
+
+<div id="High-Availability"/>
+## High Availability
+### Log Shipping
+### Logical Replication
+
+Parameters control the behavior of a logical replication subscriber:
+
+| Setting                                         | Description                                                  |
+| ----------------------------------------------- | ------------------------------------------------------------ |
+| `max_logical_replication_workers` (`int`)       | The maximum number of logical replication workers.           |
+| `max_sync_workers_per_subscription` (`integer`) | The maximum number of synchronization workers per subscription. |
+
+### Streaming Replication
+
+Parameters to set on all Senders (Master and Cascading Standby):
+
+|Setting|Description|
+|-|-|
+|`max_wal_senders` (`integer`)|The maximum number of concurrent connections from standby servers. The default is `10`.|
+|`max_replication_slots` (`integer`)|The maximum number of replication slots that the server can support. The default is `10`.|
+|`wal_keep_size` (`integer`)|The minimum size of past log file segments kept in the `pg_wal` directory, in case a standby server needs to fetch them for streaming replication. The default is `0`.|
+|`max_slot_wal_keep_size` (`integer`)|The maximum size of WAL files that [replication slots](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION-SLOTS) are allowed to retain in the `pg_wal` directory at checkpoint time.|
+|`wal_sender_timeout` (`integer`)|Terminate replication connections that are inactive for longer than this amount of time.|
+|`track_commit_timestamp` (`boolean`)|Record commit time of transactions.|
+
+Parameters to set only on the Master:
+
+| Setting                                | Description                                                  |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `synchronous_standby_names` (`string`) | A list of standby servers that can support *synchronous replication* |
+| `vacuum_defer_cleanup_age` (`integer`) | The number of transactions by which `VACUUM` and HOT updates will defer cleanup of dead row versions. |
+
+Parameters to set only on the Standby Servers:
+
+| Setting                                    | Description                                                  |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| `primary_conninfo` (`string`)              | The connection string to be used for the standby server to connect with a sending server. |
+| `primary_slot_name` (`string`)             | An existing replication slot to be used when connecting to the sending server via streaming replication to control resource removal on the upstream node. |
+| `promote_trigger_file` (`string`)          | Trigger file whose presence ends recovery in the standby.    |
+| `hot_standby` (`boolean`)                  | Specifies whether or not you can connect and run queries during recovery. |
+| `max_standby_archive_delay` (`integer`)    | How long the standby server should wait before canceling standby queries that conflict with about-to-be-applied WAL entries read from WAL archive. |
+| `max_standby_streaming_delay` (`integer`)  | How long the standby server should wait before canceling standby queries that conflict with about-to-be-applied WAL entries received via streaming replication. |
+| `wal_receiver_status_interval` (`integer`) | The minimum frequency for the WAL receiver process on the standby to send information about replication progress to the primary or upstream standby. |
+| `hot_standby_feedback` (`boolean`)         | Whether or not a hot standby will send feedback to the primary or  upstream standby about queries currently executing on the standby. |
+| `wal_receiver_timeout` (`integer`)         | Terminate replication connections that are inactive for longer than this amount of time. |
+| `wal_retrieve_retry_interval` (`integer`)  | How long the standby server should wait when WAL data is not available from any sources (streaming replication, local `pg_wal` or WAL archive) before trying again to retrieve WAL data. |
+| `recovery_min_apply_delay` (`integer`)     | A standby server restores WAL records from the sending server as soon as possible. It may be useful to have a time-delayed copy of the data,  offering opportunities to correct data loss errors. This parameter  allows you to delay recovery by a specified amount of time. |
+|                                            |                                                              |
+|                                            |                                                              |
+|                                            |                                                              |
+
+[top](#top)
+
+---
+
+
+
+<div id="PostgreSQL-Internals"/>
 # PostgreSQL Internals
 This section describes the internal working of PostgreSQL server.
 
-[top](#top)
-<div id="System-Catalogs"/>
 
+<div id="PostgreSQL-Processes"/>
+## PostgreSQL Processes
+
+### Autovacuum
+### Background writer
+
+[top](#top)
+
+---
+
+<div id="System-Catalogs"/>
 ## System Catalogs
+
 - pg_database: List of all databases
 - pg_namespace: 
 - pg_class: 
@@ -316,37 +520,55 @@ This section describes the internal working of PostgreSQL server.
 - pg_authid - The password for each database user is stored in this system catalog.
 - pg_file_settings
 - pg_settings
+- pg_replication_slots
+- pg_replication_origin
+- pg_replication_origin_status
 
 [top](#top)
-<div id="System-Functions"/>
-
-### System Functions
-
-pg_total_relation_size:
-pg_size_pretty:
 
 ---
 
+<div id="System-Functions"/>
+## System Functions
+
+- pg_total_relation_size:
+- pg_size_pretty:
+
 [top](#top)
+
+---
+
 <div id="PostgreSQL-Programming">
 
 # PostgreSQL Programming
 
 PostgreSQL is a relational database management system (RDBMS). Tables are grouped into databases, and a collection of databases managed by a single PostgreSQL server instance constitutes a database cluster.
 
-### Identifiers and Key Words
+[top](#top)
+
+---
+
+<div id="Identifiers-and-Key-Words"/>
+## Identifiers and Key Words
+
 - Key words and identifiers have the same lexical structure, meaning that one cannot know whether a token is an identifier or a key word without knowing the language.
-#### Key Words
+
+### Key Words
+
 - Tokens such as `SELECT`, `UPDATE`, or `VALUES` are examples of key words, that is, words that have a fixed meaning in the SQL language.
+
 ### Identifiers
+
 - They identify names of tables, columns, or other database objects, depending on the command they are used in. Therefore they are sometimes simply called “names”.
 - SQL identifiers and key words must begin with a letter (a-z, but also letters with diacritical marks and non-Latin letters) or an underscore (_). Subsequent characters in an identifier or key word can be letters, underscores, digits (0-9), or dollar signs ($). Note that dollar signs are not allowed in identifiers according to the letter of the SQL standard, so their use might render applications less portable. The SQL standard will not define a key word that contains digits or starts or ends with an underscore, so identifiers of this form are safe against possible conflict with future extensions of the standard.
 - The system uses no more than NAMEDATALEN-1 bytes of an identifier; longer names can be written in commands, but they will be truncated. By default, NAMEDATALEN is 64 so the maximum identifier length is 63 bytes. If this limit is problematic, it can be raised by changing the NAMEDATALEN constant in `src/include/pg_config_manual.h`.
 - There is a second kind of identifier: the delimited identifier or quoted identifier. It is formed by enclosing an arbitrary sequence of characters in double-quotes ("). 
 - Quoting an identifier also makes it case-sensitive, whereas unquoted names are always folded to lower case.
 
+
 ## Constants
 ### String Constants
+
 - A string constant in SQL is an arbitrary sequence of characters bounded by single quotes ('), for example 'This is a string'. To include a single-quote character within a string constant, write two adjacent single quotes, e.g., 'Dianne''s horse'.
 - Two string constants that are only separated by whitespace with at least one newline are concatenated and effectively treated as if the string had been written as one constant. For example:
 	```sql
@@ -357,17 +579,22 @@ PostgreSQL is a relational database management system (RDBMS). Tables are groupe
 	```sql
 	SELECT 'foobar';
 	```
+
 ### String Constants With C-Style Escapes
+
 - PostgreSQL also accepts “escape” string constants, which are an extension to the SQL standard. An escape string constant is specified by writing the letter E (upper or lower case) just before the opening single quote, e.g., E'foo'. (When continuing an escape string constant across lines, write E only before the first opening quote.) Within an escape string, a backslash character (\) begins a C-like backslash escape sequence, in which the combination of backslash and following character(s) represent a special byte value.
+
 - Any other character following a backslash is taken literally. Thus, to include a backslash character, write two backslashes (`\\`). Also, a single quote can be included in an escape string by writing `\'`, in addition to the normal way of `''`.
-**\b**	- backspace
-**\f**		- form feed
-**\n**	- newline
-**\r**		- carriage return
-**\t**		- tab
-**\o, \oo, \ooo (o = 0–7)**		- octal byte value
-**\xh, \xhh (h = 0–9, A–F)**	- hexadecimal byte value
-**\uxxxx, \Uxxxxxxxx (x = 0–9, A–F)**		- 16 or 32-bit hexadecimal Unicode character value
+|Escape Seq|Description|
+|-|-|
+|**\b**|backspace|
+|**\f**|form feed|
+|**\n**|newline|
+|**\r**|carriage return|
+|**\t**|tab|
+|**\o, \oo, \ooo (o = 0–7)**|octal byte value|
+|**\xh, \xhh (h = 0–9, A–F)**|hexadecimal byte value|
+|**\uxxxx, \Uxxxxxxxx (x = 0–9, A–F)**|16 or 32-bit hexadecimal Unicode character value|
 
 ### String Constants With Unicode Escapes
 - PostgreSQL also supports another type of escape syntax for strings that allows specifying arbitrary Unicode characters by code point. A Unicode escape string constant starts with U& (upper or lower case letter U followed by ampersand) immediately before the opening quote, without any spaces in between, for example `U&'foo'`. 
@@ -376,13 +603,13 @@ PostgreSQL is a relational database management system (RDBMS). Tables are groupe
 	```sql
 	U&'d\0061t\+000061'
 	```
-<br/>
+
 
 > **Caution:** 
-> If the configuration parameter  [standard_conforming_strings](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-STANDARD-CONFORMING-STRINGS)  is  `off`, then  PostgreSQL  recognizes backslash escapes in both regular and escape string constants. However, as of  PostgreSQL  9.1, the default is  `on`, meaning that backslash escapes are recognized only in escape string constants. This behavior is more standards-compliant, but might break applications which rely on the historical behavior, where backslash escapes were always recognized. As a workaround, you can set this parameter to  `off`, but it is better to migrate away from using backslash escapes. If you need to use a backslash escape to represent a special character, write the string constant with an  `E`.
-In addition to  `standard_conforming_strings`, the configuration parameters  [escape_string_warning](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-ESCAPE-STRING-WARNING)  and  [backslash_quote](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-BACKSLASH-QUOTE)  govern treatment of backslashes in string constants.
+> If the configuration parameter [standard_conforming_strings](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-STANDARD-CONFORMING-STRINGS) is `off`, then PostgreSQL recognizes backslash escapes in both regular and escape string constants. However, as of PostgreSQL 9.1, the default is `on`, meaning that backslash escapes are recognized only in escape string constants. This behavior is more standards-compliant, but might break applications which rely on the historical behavior, where backslash escapes were always recognized. As a workaround, you can set this parameter to `off`, but it is better to migrate away from using backslash escapes. If you need to use a backslash escape to represent a special character, write the string constant with an `E`.
+> In addition to `standard_conforming_strings`, the configuration parameters [escape_string_warning](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-ESCAPE-STRING-WARNING) and [backslash_quote](https://www.postgresql.org/docs/13/runtime-config-compatible.html#GUC-BACKSLASH-QUOTE) govern treatment of backslashes in string constants.
 
-<br/>
+ 
 
 ### Dollar-Quoted String Constants
 - While the standard syntax for specifying string constants is usually convenient, it can be difficult to understand when the desired string contains many single quotes or backslashes, since each of those must be doubled. To allow more readable queries in such situations, PostgreSQL provides another way, called “dollar quoting”, to write string constants. A dollar-quoted string constant consists of a dollar sign ($), an optional “tag” of zero or more characters, another dollar sign, an arbitrary sequence of characters that makes up the string content, a dollar sign, the same tag that began this dollar quote, and a dollar sign. For example, here are two different ways to specify the string “Dianne's horse” using dollar quoting:
@@ -416,12 +643,12 @@ In addition to  `standard_conforming_strings`, the configuration parameters  [es
 	1.925e-3
 	```
 - A numeric constant that contains neither a decimal point nor an exponent is initially presumed to be type integer if its value fits in type integer (32 bits); otherwise it is presumed to be type bigint if its value fits in type bigint (64 bits); otherwise it is taken to be type numeric. Constants that contain decimal points and/or exponents are always initially presumed to be type numeric.
-<br/>
-<br/>
+
+ 
 
 ## Data Types and Precedence
-<br/>
-<br/>
+
+ 
 
 ## Operators
 - An operator name is a sequence of up to NAMEDATALEN-1 (63 by default) characters from the following list:
@@ -431,23 +658,24 @@ In addition to  `standard_conforming_strings`, the configuration parameters  [es
 
 ### Operator Precedence (highest to lowest)
 
-| Operator/Element              | Associativity | Description                                           |
-|-------------------------------|---------------|-------------------------------------------------------|
-| .                             | left          | table/column name separator                           |
-| ::                            | left          | PostgreSQL-style typecast                             |
-| [ ]                           | left          | array element selection                               |
-| + -                           | right         | unary plus, unary minus                               |
-| ^                             | left          | exponentiation                                        |
-| * / %                         | left          | multiplication, division, modulo                      |
-| + -                           | left          | addition, subtraction                                 |
-| (any other operator)          | left          | all other native and user-defined operators           |
-| BETWEEN IN LIKE ILIKE SIMILAR |               | range containment, set membership, string matching    |
-| < > = <= >= <>                |               | comparison operators                                  |
-| IS ISNULL NOTNULL             |               | IS TRUE, IS FALSE, IS NULL, IS DISTINCT FROM, etc     |
-| NOT                           | right         | logical negation                                      |
-| AND                           | left          | logical conjunction                                   |
-| OR                            | left          | logical disjunction                                   |
-### Special Characters
+| Operator/Element|Associativity|Description|
+|-|-|-|
+|.|left|table/column name separator|
+|::|left|PostgreSQL-style typecast|
+|[ ]|left|array element selection|
+| + -  | right| unary plus, unary minus |
+| ^    | left | exponentiation |
+| * / %| left | multiplication, division, modulo |
+| + -  | left | addition, subtraction   |
+| (any other operator)     | left | all other native and user-defined operators        |
+| BETWEEN IN LIKE ILIKE SIMILAR     |      | range containment, set membership, string matching |
+| < > = <= >= <>  |      | comparison operators    |
+| IS ISNULL NOTNULL        |      | IS TRUE, IS FALSE, IS NULL, IS DISTINCT FROM, etc  |
+| NOT  | right| logical negation        |
+| AND  | left | logical conjunction     |
+| OR   | left | logical disjunction     |
+
+### Special Characters 
 - Some characters that are not alphanumeric have a special meaning that is different from being an operator. Details on the usage can be found at the location where the respective syntax element is described. This section only exists to advise the existence and summarize the purposes of these characters.
 - A dollar sign (`$`) followed by digits is used to represent a positional parameter in the body of a function definition or a prepared statement. In other contexts the dollar sign can be part of an identifier or a dollar-quoted string constant.
 - Parentheses (`()`) have their usual meaning to group expressions and enforce precedence. In some cases parentheses are required as part of the fixed syntax of a particular SQL command.
@@ -457,10 +685,6 @@ In addition to  `standard_conforming_strings`, the configuration parameters  [es
 - The colon (`:`) is used to select “slices” from arrays. (See Section 8.15.) In certain SQL dialects (such as Embedded SQL), the colon is used to prefix variable names.
 - The asterisk (`*`) is used in some contexts to denote all the fields of a table row or composite value. It also has a special meaning when used as the argument of an aggregate function, namely that the aggregate does not require any explicit parameter.
 - The period (`.`) is used in numeric constants, and to separate schema, table, and column names.
-<br/>
-<br/>
-
-
 
 
 
@@ -487,10 +711,10 @@ relfilenode
 - For Example: (0, 1) means Page 0 (first page) and Tuple number 1 on that page, (3, 9) means Page 3 (fourth page) and Tuple number 9 on that page.
 ```sql
 SELECT ctid, id, name FROM foo WHERE id = 5432;
-  ctid  |  id  |  name  
---------+------+--------
- (0,1)  |   1  |  Alex
- (0,1)  |   2  |  Bob
+ ctid  | id | name 
+-------+----+--------
+ (0,1) |  1 | Alex
+ (0,1) |  2 | Bob
 (2 rows)
 ```
 <br>
@@ -545,7 +769,7 @@ CREATE UNIQUE INDEX unique_email_loginname_idx ON table (email_address, login_na
 ```sql
 CREATE INDEX CONCURRENTLY id_partial ON bar USING BTREE (id) WHERE id < 10000;
 ```
-6. **Covering Index - Include option**[^1]  [^2]
+6. **Covering Index - Include option**[^1] [^2]
 	- Improve index-only returns minimizing drawbacks
 	- Store column values in leaf node tuples, but not in upper-level navigation entries.
 	- Typically, the columns in the `SELECT` clause go in the `INCLUDE` clause.
@@ -581,7 +805,7 @@ CREATE INDEX id_amount_no_dedup ON orders USING BTREE (amount) WITH (deduplicate
 	- Supports index-only scans and range scans. 
 	- Range lookups are sorted in the index. Optimizer can read index for sorted results or read heap then sort.
 	- Supports forward and backward scanning.
-	- Supported Operators: `<`   `<=`   `=`   `>=`   `>`
+	- Supported Operators: `<` `<=` `=` `>=` `>`
 	- Ideal for high cardinality data (columns with unique values)
 	- Default fill-factor is 90.
 ```sql
@@ -589,10 +813,10 @@ CREATE INDEX CONCURRENTLY btree_idx ON foo USING BTREE (name);
 CREATE INDEX CONCURRENTLY id_name_dob_idx ON foo USING BTREE (id, name, dob);
 ```
 ```sql
-  ctid  |  name
+ ctid | name
 --------+---------
-  (0,1) |  Alex
-  (0,2) |  Bob
+ (0,1) | Alex
+ (0,2) | Bob
 ```
 2. **Hash Index**
 	- Creates a hash-table of the column on which the index is created.
@@ -617,7 +841,7 @@ CREATE INDEX CONCURRENTLY btree_idx ON foo USING HASH (name);
 		- Max value of column
 	- Splits the table into ranges of blocks, default range is 128 blocks. 
 	- Works as an accelerator for Sequential Scan.
-	- Supported Operators: `<`   `<=`   `=`   `>=`   `>`
+	- Supported Operators: `<` `<=` `=` `>=` `>`
 	- The Hash index structure stored the column value on which the index is created along with the ctid.
 	- If you Delete / Update a tuple in table, then this index needs to be rebuilt.
 	- Ideal for insert only tables where date column is ever increasing.
@@ -647,20 +871,9 @@ CREATE INDEX CONCURRENTLY gin_idx ON bar USING GIST (json_data);
 ```
 
 
-<br/>
-<br/>
 
-[^1]: Introduced in PostgreSQL v11 
+ 
+
+[^1]: Introduced in PostgreSQL v11
 [^2]: Introduced in PostgreSQL v12
 [^3]: Introduced in PostgreSQL v13
-
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAxMTQ3NzczLDE4MzExOTQ1NTUsLTE4OT
-QyMTAwMCwtODA4MzM3NDAzLDE4Njg4NDEyNjYsLTE2NDcxMzQ5
-NTYsLTMyMTgyNzQ0MCwtMTMxODkwMTcxMSwxMTU1MDAzNDI2LC
-0xMjk0NTE2ODcwLC0xNzI1OTMyOTY0LDExNjQ2MjY0NDksLTE5
-NjkxOTA2NjcsMTkzODI5NDE5MiwtMTcxMDg2NDk3MywtMjExMj
-E1MzE0MywtMTUzNTM3NzU4MiwxNDkyNjgzOTMsMjA2NDk1MjI1
-OSw0ODI0MDQwOTFdfQ==
--->
