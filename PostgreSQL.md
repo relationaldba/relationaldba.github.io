@@ -1,13 +1,13 @@
+---
+layout: default
+title: Home
+---
+
 Author: Varun Deshpande
 Started: 2021-08-16
 Last Modified: 2021-08-18
 # PostgreSQL Administration
 
-
-
-
-
-9-07
 
 ---
 
