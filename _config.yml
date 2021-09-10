@@ -99,8 +99,8 @@ text:
   index:
     coming_soon: 'Coming soon...'
   contact:
-    email:    'varundeshpande.vd@gmail.com'
-    content:  'This is my contact content.'
+    email:    'Your email'
+    content:  'Your message goes here.'
     subject:  'New submission!'
     submit:   'Say Hello'
     ajax:
