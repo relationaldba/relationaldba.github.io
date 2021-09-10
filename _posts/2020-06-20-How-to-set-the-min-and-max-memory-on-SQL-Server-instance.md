@@ -13,11 +13,11 @@ Setting the right numbers for the Minimum and Maximum server Memory on SQL Serve
 
 * Inside SSMS, Right Click on the Instance and select “Properties”.
     
-![SSMS](/img/posts/2020-06-20-How-to-set-the-min-and-max-memory-on-SQL-Server-instance/01.png){: height="100%" }
+![SSMS](/img/posts/2020-06-20-How-to-set-the-min-and-max-memory-on-SQL-Server-instance/01.png)
 
 * In the Properties window, choose “Memory” and you will now see options to set the Minimum and Maximum Server memory in MB.
 
-![Properties](/img/posts/2020-06-20-How-to-set-the-min-and-max-memory-on-SQL-Server-instance/02.png)
+![Properties](/img/posts/2020-06-20-How-to-set-the-min-and-max-memory-on-SQL-Server-instance/02.png){: width="100%" }
 
 * Here you can set the desired values for the Min and Max Server memory in MB. 
 
