@@ -1,26 +1,7 @@
-<!--
-  Thanks for creating a Pull Request! Before you submit, please make sure
-  you've done the following:
+## Read this before making a pull request
 
-  - Read the contributing document at https://github.com/mmistakes/so-simple-theme#contributing
--->
+### There's no need to make a pull request against the original repo for personal changes
 
-<!--
-  Choose one of the following by uncommenting it:
--->
+You can publish your copy of Pixyll from your fork using GitHub Pages, without ever needing to make a pull request. The original source repository (johno/pixyll) exists as a template.
 
-<!-- This is a bug fix. -->
-<!-- This is an enhancement or feature. -->
-<!-- This is a documentation change. -->
-
-## Summary
-
-<!--
-  Provide a description of what your pull request changes.
--->
-
-## Context
-
-<!--
-  Is this related to any GitHub issue(s)?
--->
+To learn more look [here](https://stackoverflow.com/questions/3611256/forking-vs-branching-in-github)
