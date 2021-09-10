@@ -13,8 +13,3 @@ Nothing much going on right now. Learning how to create a static blog post using
 
 <script src="https://gist.github.com/relationaldba/5a6e427143dd91596ba56e0624b6ae77.js"></script>
 
-```sql
-USE AdventureWorks
-DBCC SHRINKFILE (AdventureWorks2017_Log, 50);  
-GO
-```
