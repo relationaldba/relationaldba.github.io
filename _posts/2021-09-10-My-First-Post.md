@@ -9,4 +9,4 @@ background: '/img/posts/my-first-post.jpg'
 # This is my first post.
 Nothing much going on right now. Learning how to create a static blog post using Jekyll and Github Pages.
 
-[image](/img/posts/my-first-post.jpg)
+![image](/img/posts/my-first-post.jpg)
