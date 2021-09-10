@@ -20,7 +20,7 @@ locale: en-US
 title: "RelationalDBA"
 description: "Learn Relational Databases"
 baseurl: ""
-url: "https://relationaldba.github.io"
+url: "relationaldba.github.io"
 logo: # path of site logo, e.g. "/images/logo.png"
 date_format: "%B %-d, %Y"
 read_time: # reading time estimates, e.g. true
