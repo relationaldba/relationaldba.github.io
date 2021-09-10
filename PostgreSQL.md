@@ -1,15 +1,14 @@
+---
+layout: default
+title: PostgreSQL Page
+---
+
 Author: Varun Deshpande
 Started: 2021-08-16
 Last Modified: 2021-08-18
 # PostgreSQL Administration
 
 
-
-
-
-9-07
-
----
 
 <div id="top"/>
 
