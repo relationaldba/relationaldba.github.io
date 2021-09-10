@@ -16,7 +16,7 @@ Setting the right numbers for the Minimum and Maximum server Memory on SQL Serve
    ![SSMS](/img/posts/2021-06-20-How to set the min and max memory on SQL Server instance/01.png)
 
 * In the Properties window, choose “Memory” and you will now see options to set the Minimum and Maximum Server memory in MB.
-    ![SSMS](/img/posts/2021-06-20-How to set the min and max memory on SQL Server instance/02.png)
+    ![Properties]("/img/posts/2021-06-20-How to set the min and max memory on SQL Server instance/02.png")
 
 * Here you can set the desired values for the Min and Max Server memory in MB. 
         Please note that you have to be extra cautious when setting these parameters as fat-fingering an incorrect value can bring down your SQL Server instance and will be very painful to fix. I have been there and done that and its not a very pleasant experience.
