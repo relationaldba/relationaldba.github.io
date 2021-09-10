@@ -2,7 +2,7 @@
 layout: post
 title: "How to set the min and max memory on SQL Server instance?"
 subtitle: "SQL/Configuration"
-background: '/img/posts/2021-06-20-How to set the min and max memory on SQL Server instance/bg-mssql.png'
+background: '/img/posts/bg-mssql.png'
 ---
 
 # How to set the min and max memory on SQL Server instance?
