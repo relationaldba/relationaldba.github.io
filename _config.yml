@@ -16,7 +16,7 @@
 theme: jekyll-theme-modernist
 # remote_theme: mmistakes/so-simple-theme
 skin: "/assets/css/skins/default.css"
-locale: en-US
+locale: "en-US"
 title: "RelationalDBA"
 description: "Learn Relational Databases"
 baseurl: ""
