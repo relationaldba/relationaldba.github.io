@@ -5,7 +5,7 @@ subtitle: "SQL/Configuration"
 background: '/img/posts/bg-mssql.png'
 ---
 
-# How to set the min and max memory on SQL Server instance?
+## How to set the min and max memory on SQL Server instance?
 
 Setting the right numbers for the Minimum and Maximum server Memory on SQL Server Instance is a key to optimize the performance of the server. In an ideal world SQL Server would not need to share memory on the Server with any other applications, however not many shops can afford to have a dedicated instance for SQL Server. Hence it is important to measure the memory requirements of all the programs running on the Server and set the SQL Server’s memory accordingly
 
