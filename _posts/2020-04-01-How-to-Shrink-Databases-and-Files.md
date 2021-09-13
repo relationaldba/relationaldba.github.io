@@ -1,7 +1,7 @@
 ---
 published: true
-title: How to Shrink Databases and Files
-date: 2020-04-02T00:00:00.000Z
+title: How to Shrink Databases and Files?
+date: {}
 layout: post
 summary: Learn how to shrink the databases and files efficiently.
 categories: Administration
@@ -59,9 +59,11 @@ This is one of the options that I strongly recommend if you want to quickly shri
 1. Always measure the fragmentation of the indexes in your database before and after the shrink operation. It will help you gauge the damage inflicted by the shrink operation on the fragmentation of your indexes.
 2. I would normally run the reorganize index command to reduce the fragmentation right after the shrink completes.
 3. I also would confirm that there is enough space available on the disks for the database to grow again.
-4. If the database is expected to grow at a faster rate, I would ensure the filegrowth value is set to an optimal value to avoid repetitive growth in small chunks as it could lead to file defragmentation.</li><li>In some cases I would consider enabling <a href="https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-instant-file-initialization" target="_blank" rel="noreferrer noopener">Instant File Initialization</a> to help SQL Server grow files faster without having to zero-writing the newly allocated chunk of space. Use this feature with caution as it has some security issues.
+4. If the database is expected to grow at a faster rate, I would ensure the filegrowth value is set to an optimal value to avoid repetitive growth in small chunks as it could lead to file defragmentation.
+5. In some cases I would consider enabling <a href="https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-instant-file-initialization" target="_blank" rel="noreferrer noopener">Instant File Initialization</a> to help SQL Server grow files faster without having to zero-writing the newly allocated chunk of space. Use this feature with caution as it has some security issues.
 
 ## Final thoughts
+
 Shrinking is not as bad as it sounds if done with proper analysis. Explore other options to fix the space issue before you settle for shrinking. Money spent on expanding the storage by a few hundred gigs is money well spent. Plan the downtime for shrink operation in advance as it could lead to blocking and unhappy users. I would recommend reading Brent Ozar's great blog on <a rel="noreferrer noopener" href="https://www.brentozar.com/archive/2017/12/whats-bad-shrinking-databases-dbcc-shrinkdatabase/" target="_blank">What’s So Bad About Shrinking Databases</a>. Its a great demo of how shrinking impacts the indexes and what you can expect after rebuilding indexes.
 
 Hope you found this article helpful!
