@@ -1,7 +1,7 @@
 ---
 published: true
 title: How to Shrink Databases and Files?
-date: {}
+date: 2020-04-02T00:00:00.000Z
 layout: post
 summary: Learn how to shrink the databases and files efficiently.
 categories: Administration
