@@ -6,7 +6,7 @@ layout: post
 summary: "Learn how to fix the error 15517 – Cannot execute as the database principal..."
 categories: Troubleshooting Error
 ---
-![Background](/img/bg-mssql-1024x288.png)
+![Background](/img/bg-love-mssql.png)
 
 While creating a database diagram the other day, I ran into the below error on SQL Server Management Studio.
 

@@ -6,7 +6,7 @@ layout: post
 summary: Do your databases have a lot of free space?
 categories: Administration
 ---
-![Background](/img/bg-mssql-1024x288.png)
+![Background](/img/bg-love-mssql.png)
 SQL Server stores data in the files and file groups. The smallest, most atomic chunk of data is a SQL Server page that has a size of 8KB. Data and log files are made up by a collections of such 8KB pages. The storage engine allocates new pages to the files as they grow. Each time the file grows, the storage engine requests the operating system to allocate space for the file to physically grow. The amount of space it requests is determined by the auto-growth setting of that file.
 
 On the other hand, SQL Server de-allocates the pages when they become empty due to deletion, truncation, log backup or compacting the data. However, SQL Server will not release the empty space (unused pages) that gets created because of page de-allocation, back to the Operating System. It will continue to hold ownership to that physical free space inside the file, until the file or the database is forced to give up that space by a **DBCC SHRINK** operation. 
