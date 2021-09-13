@@ -46,4 +46,4 @@ I strongly recommend reading <a href="https://docs.microsoft.com/en-us/sql/t-sql
 
 I do not recommend using these loop techniques before first considering set based alternatives. However, if you find yourself in a position where looping is the only viable solution, go for the one that serves your purpose.
 
-I hope you found this article helpful. Leave a comment letting me know if you use any of these or if you know of any other looping technique using T-SQL.
+I hope you found this article helpful.
