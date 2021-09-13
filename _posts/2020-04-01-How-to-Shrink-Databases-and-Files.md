@@ -47,7 +47,7 @@ Here is how the locks look like in my demo environment. This is an output of Ada
 
 ## Shrink the files in small chunks
 One of the tricks to shrink a huge database example 1 TB database with 500 GB free space is to break down the shrink operation into smaller units of work. I would normally split the shrink operation over several days to keep the maintenance window as low as possible. For example, I would normally shrink the size by only 5 or 10 GB at a time and keep repeating the operation until I clear out the entire 500 GB of free space.
-Here is how the database could be shrunk by 5 GB every day.
+Here is how the database could be shrunk by 50 GB every day.
 <script src="https://gist.github.com/relationaldba/18765c23100575f4f0386fd4abc0f416.js"></script>
 
 ## TRUNCATEONLY option
