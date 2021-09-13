@@ -41,9 +41,9 @@ tags: about
 <div class="row">
   <div class="column left">
         <img src="/img/about-me.jpg" />
-        <a href="https://ca.linkedin.com/in/relationaldba/" target="_blank"><img src="/img/icons/linkedin.png" alt="LinkedIn"></a>
-        <a href="https://twitter.com/relationaldba" target="_blank"><img src="/img/icons/twitter.png" alt="Twitter"></a>
-        <a href="mailto:varundeshpande.vd@gmail.com" target="_blank"><img src="/img/icons/mail.png" alt="Email"></a>
+        <a href="https://ca.linkedin.com/in/relationaldba/" target="_blank"><img src="/img/icon/linkedin.png" alt="LinkedIn"></a>
+        <a href="https://twitter.com/relationaldba" target="_blank"><img src="/img/icon/twitter.png" alt="Twitter"></a>
+        <a href="mailto:varundeshpande.vd@gmail.com" target="_blank"><img src="/img/icon/mail.png" alt="Email"></a>
     </div>
     <div class="column right">
         <p>I am Varun Deshpande and I love Relational Databases. I have over 10 years of experience with building, maintaining and administering Microsoft SQL Server and over 4 years with PostgreSQL. I am a Microsoft Certified Expert – SQL Server 2016 (Certified 2020). I have a total of 14 years of Industry Experience and hold a Bachelor’s Degree in Computer Applications.</p>
