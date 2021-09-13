@@ -15,7 +15,7 @@ On the other hand, SQL Server de-allocates the pages when they become empty due 
 
 You can check the free space inside the database by going to the database properties in SSMS (Right Click on Database Name in Object Explorer > Click Properties) as shown in the screenshot below. This way you get the total free space inside all the files combined in the database. It does not show you the free space in each of the files individually.
 
-![TSQL](/img/posts/2020-03-17-Check-free-space-in-Database-and-Log-files/free-space-using-ssms.png)
+![Free Space using SSMS](/img/posts/2020-03-17-Check-free-space-in-Database-and-Log-files/free-space-using-ssms.png)
 
 ## Check Free space using T-SQL Script
 
@@ -25,7 +25,7 @@ Alternatively, I like to check for the free space inside all the files individua
 
 The output of this query looks like this:
 
-![TSQL](/img/posts/2020-03-17-Check-free-space-in-Database-and-Log-files/free-space-using-tsql.png)
+![Free Space using TSQL](/img/posts/2020-03-17-Check-free-space-in-Database-and-Log-files/free-space-using-tsql.png)
 
 ## Final Thoughts
 
