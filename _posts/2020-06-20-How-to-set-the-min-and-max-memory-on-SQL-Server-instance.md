@@ -41,7 +41,7 @@ Here are some considerations when setting the Min and Max memory for SQL Server:
 If the answer to this question is Yes, then, you want to allocate as much memory to the SQL Instance as possible. I would leave around 30% of the Server memory for the Windows OS and other utilities like Antivirus, RDP sessions of the users, SSMS etc and allocate around 70% to SQL Server as the max server memory.
 
 2. Are you running multiple instances of SQL Server on your box?
-If the answer to this question is Yes, then you want to distribute the memory between these instances based on their workload so that they do not fight among each other for RAM. Example Instance1 gets 40% RAM, Instance2 gets 30% RAM and the remaining 30% we leave for the OS and other utilities.
+If the answer to this question is Yes, then you want to distribute the memory between these instances based on the total database size and workload so that they do not fight among each other for RAM. Example Instance1 gets 40% RAM, Instance2 gets 30% RAM and the remaining 30% we leave for the OS and other utilities.
 
 3. What’s the recommended value for Minimum memory?
 The out of box setting for Minimum server memory for SQL Server is 0 MB. This means SQL will not reserve any fixed memory if it experiences memory pressure. This setting, in my opinion, should not be changed unless you are fixing issues with Memory pressure on the SQL Instance caused by other utilities running on the box. Setting this value to a non-zero value could, in some cases, cause issues with memory management of Windows and the Instance could crash due to excessive memory pressure.
