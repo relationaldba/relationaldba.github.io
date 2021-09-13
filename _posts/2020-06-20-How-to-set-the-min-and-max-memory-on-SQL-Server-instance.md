@@ -1,12 +1,13 @@
 ---
 layout: post
-title: "How to set the min and max memory on SQL Server instance?"
-date: 2020-06-20 11:21:29
-summary: "Learn how to configure memory in the SQL Server."
+title: How to set the min and max memory on SQL Server instance?
+date: {}
+summary: Learn how to configure memory in the SQL Server.
 categories: Configuration Tuning
+published: true
 ---
 
-Setting the right numbers for the Minimum and Maximum server Memory on SQL Server Instance is a key to optimize the performance of the server. In an ideal world SQL Server would not need to share memory on the Server with any other applications, however not many shops can afford to have a dedicated instance for SQL Server. Hence it is important to measure the memory requirements of all the programs running on the Server and set the SQL Server’s memory accordingly
+Setting appropriate values for the min. and max. memory on a SQL Server instance is important for its performance. In an ideal world, SQL Server need not share the server resources with any other application. However, for many shops, this is not the case as the VM running SQL Server could be assigned several roles. Hence it is important to measure the memory requirements of all the programs running on the Server and set the SQL Server’s memory accordingly.
 
 ## Setting memory using SQL Server Management Studio
 
@@ -37,7 +38,7 @@ Setting the right numbers for the Minimum and Maximum server Memory on SQL Serve
 Here are some considerations when setting the Min and Max memory for SQL Server:
 
 1. Is your Box dedicated to SQL Server?
-If the answer to this question is Yes, then, you want to allocate as much memory to the SQL Instance as possible. I would leave around 30% of the Server memory for the Windows OS and other utilities like Antivirus, RDP sessions of the users, SSMS etc and allocate around 70% to SQL Server.
+If the answer to this question is Yes, then, you want to allocate as much memory to the SQL Instance as possible. I would leave around 30% of the Server memory for the Windows OS and other utilities like Antivirus, RDP sessions of the users, SSMS etc and allocate around 70% to SQL Server as the max server memory.
 
 2. Are you running multiple instances of SQL Server on your box?
 If the answer to this question is Yes, then you want to distribute the memory between these instances based on their workload so that they do not fight among each other for RAM. Example Instance1 gets 40% RAM, Instance2 gets 30% RAM and the remaining 30% we leave for the OS and other utilities.
