@@ -1,8 +1,3 @@
-Copyright (c) 2014-2021 John Otander
-Copyright (c) 2014 Daniel Eden for animate.css
-Copyright (c) 2014 Brent Jackson for Basscss
-Copyright (c) 2013 Twitter, Inc for CSS copied from Bootstrap
-
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining
