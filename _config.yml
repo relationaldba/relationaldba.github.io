@@ -101,7 +101,7 @@ text:
   contact:
     email:    'Your email'
     content:  'Your message goes here'
-    subject:  'New submission!'
+    subject:  'Relationaldba.com Contact Form - New submission!'
     submit:   'Say Hello'
     ajax:
       sending:  'sending..'
