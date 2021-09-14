@@ -7,7 +7,6 @@ baseurl:     ""
 url:         "https://relationaldba.github.io/"
 date_format: "%b %-d, %Y"
 header_pages:
- - posts.md
  - about.md
  - contact.html
 
