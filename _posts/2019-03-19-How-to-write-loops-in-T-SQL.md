@@ -3,7 +3,7 @@ layout: post
 title: How to write loops using T-SQL in SQL Server?
 date: 2019-03-19T00:00:00.000Z
 summary: Learn how to loop using T-SQL.
-categories: TSQL Scripts
+categories: TSQL,Scripts
 published: true
 ---
 ![Background](/img/posts/2019-03-19-How-to-write-loops-in-T-SQL/01-Ooo...-I-hate-these-fruit-loops-1024x512.png)
