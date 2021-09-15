@@ -4,7 +4,7 @@ title: How to Shrink Databases and Files?
 date: 2020-04-02T00:00:00.000Z
 layout: post
 summary: Learn how to shrink the databases and files efficiently.
-categories: Administration
+categories: SQLServer Administration
 ---
 ![Background](/img/posts/2020-04-02-How-to-Shrink-Databases-and-Files/bg.png)
 **NO, it does NOT sound like a plan!!**

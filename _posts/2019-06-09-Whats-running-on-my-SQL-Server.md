@@ -3,7 +3,7 @@ layout: post
 title: What’s running on my SQL Server?
 date: 2019-06-09T00:00:00.000Z
 summary: Find out currently the running queries on SQL Server.
-categories: TSQL Scripts
+categories: SQLServer TSQL Scripts
 published: true
 ---
 ![Background](/img/posts/2019-06-09-Whats-running-on-my-SQL-Server/01-Whats-up-SQL-Server-1024x512.png)

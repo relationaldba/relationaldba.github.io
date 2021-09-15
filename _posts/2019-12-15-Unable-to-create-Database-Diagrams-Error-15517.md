@@ -4,7 +4,7 @@ title: "Unable to create Database Diagrams. Error: 15517 – Cannot execute as t
 date: 2019-12-15T00:00:00.000Z
 layout: post
 summary: "Learn how to fix the error 15517 – Cannot execute as the database principal..."
-categories: Troubleshooting Error
+categories: SQLServer Troubleshooting Error
 ---
 ![Background](/img/love-sql-server.png)
 

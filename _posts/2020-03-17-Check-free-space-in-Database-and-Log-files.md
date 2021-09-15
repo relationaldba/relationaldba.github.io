@@ -4,7 +4,7 @@ title: Check free space in Database and Log files
 date: 2020-03-17T00:00:00.000Z
 layout: post
 summary: Do your databases have a lot of free space?
-categories: Administration
+categories: SQLServer Administration
 ---
 ![Background](/img/love-sql-server.png)
 SQL Server stores data in the files and file groups. The smallest, most atomic chunk of data is a SQL Server page that has a size of 8KB. Data and log files are made up by a collections of such 8KB pages. The storage engine allocates new pages to the files as they grow. Each time the file grows, the storage engine requests the operating system to allocate space for the file to physically grow. The amount of space it requests is determined by the auto-growth setting of that file.

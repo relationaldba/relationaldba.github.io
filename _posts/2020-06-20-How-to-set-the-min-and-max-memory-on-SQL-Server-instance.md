@@ -3,7 +3,7 @@ layout: post
 title: How to set the min and max memory on SQL Server instance?
 date: 2020-06-20T00:00:00.000Z
 summary: Learn how to configure memory in the SQL Server.
-categories: Configuration Tuning
+categories: SQLServer Configuration Tuning
 published: true
 ---
 
