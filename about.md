@@ -41,6 +41,7 @@ tags: about
 <div class="row">
   <div class="column left">
         <img src="/img/about-me.jpg" />
+        <br />
         <a href="https://ca.linkedin.com/in/relationaldba/" target="_blank"><img src="/img/icon/linkedin.png" alt="LinkedIn"></a>
         <a href="https://twitter.com/relationaldba" target="_blank"><img src="/img/icon/twitter.png" alt="Twitter"></a>
         <a href="mailto:varundeshpande.vd@gmail.com" target="_blank"><img src="/img/icon/mail.png" alt="Email"></a>
